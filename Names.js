@@ -72,3 +72,7 @@ function authorizedCallback(auth) {
     });
   });
 }
+
+module.exports = {
+  names,
+};
