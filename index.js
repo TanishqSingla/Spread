@@ -20,14 +20,13 @@ function authorize(credentials, callback) {
     client_secret,
     redirect_uris[0]
   );
+  //checking for previous tokens
+  fs.readFile(TOKEN_PATH, (err, token) => {
+    if (err) return getNewToken(oAuth2Client, callback);
+    oAuth2Client.setCredentials(JSON.parse(token));
+    callback(oAuth2Client);
+  });
 }
-
-//checking for previous tokens
-fs.readFile(TOKEN_PATH, (err, token) => {
-  if (err) return getNewToken(oAuth2Client, callback);
-  oAuth2Client.setCredentials(JSON.parse(token));
-  callback(oAuth2Client);
-});
 
 function getNewToken(oAuth2Client, callback) {
   const authUrl = oAuth2Client.generateAuthUrl({
@@ -41,7 +40,7 @@ function getNewToken(oAuth2Client, callback) {
   });
   rl.question("Enter the code from that page here:", (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, Token) => {
+    oAuth2Client.getToken(code, (err, token) => {
       if (err)
         return console.log("Error while trying to retrieve access token", err);
       oAuth2Client.setCredentials(token);
@@ -61,7 +60,7 @@ function authorizedCallback(auth) {
   const sheetId = "1HsKMv8JdOUUs_DkwqgAZgrg75fCf4vukmtVZrKNI7a4";
   const options = {
     spreadsheetId: sheetId,
-    range: "",
+    range: "A:E",
   };
   sheets.spreadsheets.values.get(options, (err, res) => {
     if (err) return console.log("The API returned an error: " + err);
