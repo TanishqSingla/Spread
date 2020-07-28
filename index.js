@@ -54,17 +54,21 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
+let names = [];
+
 //Function for getting data from spreadsheet
 function authorizedCallback(auth) {
   const sheets = google.sheets({ version: "v4", auth });
   const sheetId = "1HsKMv8JdOUUs_DkwqgAZgrg75fCf4vukmtVZrKNI7a4";
   const options = {
     spreadsheetId: sheetId,
-    range: "A:E",
+    range: "A2:B",
   };
   sheets.spreadsheets.values.get(options, (err, res) => {
     if (err) return console.log("The API returned an error: " + err);
     const rows = res.data.values;
-    console.table(rows);
+    names = rows.map((row) => {
+      return row[1];
+    });
   });
 }
