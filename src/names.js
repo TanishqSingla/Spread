@@ -9,7 +9,7 @@ const TOKEN_PATH = "token.json";
 fs.readFile("credentials.json", (err, content) => {
   if (err) return console.log("Error loading client file", err);
 
-  authorize(JSON.parse(content), authorizedCallback);
+  authorize(JSON.parse(content), listNames);
 });
 
 //Credentials authorization
@@ -57,7 +57,7 @@ function getNewToken(oAuth2Client, callback) {
 let names = [];
 
 //Function for getting data from spreadsheet
-function authorizedCallback(auth) {
+function listNames(auth) {
   const sheets = google.sheets({ version: "v4", auth });
   const sheetId = "1HsKMv8JdOUUs_DkwqgAZgrg75fCf4vukmtVZrKNI7a4";
   const options = {
