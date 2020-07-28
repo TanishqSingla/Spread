@@ -72,7 +72,3 @@ function listNames(auth) {
     });
   });
 }
-
-module.exports = {
-  names,
-};
