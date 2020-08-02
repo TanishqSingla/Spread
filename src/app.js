@@ -3,4 +3,12 @@ const ejs = require("ejs");
 
 const app = express();
 
-app.use("view engine", "ejs");
+app.set("view engine", "ejs");
+
+app.get("/", (req, res) => {
+  res.render("index", {});
+});
+
+app.listen(3000, () => {
+  console.log("Server is up and running at port 3000");
+});
