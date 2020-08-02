@@ -8,8 +8,10 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 
+let name = "name";
+
 app.get("/", (req, res) => {
-  res.render("index", {});
+  res.render("index", { name });
 });
 
 app.listen(3000, () => {
